@@ -34,21 +34,21 @@ function App() {
 
 		// Get popular articles
 		onSnapshot(query(collection(firestore, 'articles'), orderBy('views', 'desc'), limit(10)), (articles) => {
-			console.log('popular', articles);
+			console.log('popular videos', articles);
 			setPopular(formatArticle(articles));
 		});
 
 		// Get all recent articles
 		onSnapshot(query(collection(firestore, 'articles'), orderBy('createdAt', 'desc'), limit(10)), (articles) => {
 			page1EndDocument = articles.docs[articles.docs.length - 1];
-			console.log('page 1', articles);
+			console.log('latest videos', articles);
 			setAll(formatArticle(articles));
 		});
 
 		// Get page 1 of filtered articles
 		onSnapshot(query(collection(firestore, 'articles'), orderBy('createdAt', 'desc'), limit(5)), (articles) => {
 			page1EndDocument = articles.docs[articles.docs.length - 1];
-			console.log('page 1', articles);
+			console.log('filtered videos page 1', articles);
 			setFiltered1(formatArticle(articles));
 		});
 
@@ -57,10 +57,10 @@ function App() {
 			// Get page 2 of filtered articles
 			onSnapshot(query(collection(firestore, 'articles'), orderBy('createdAt', 'desc'), startAfter(page1EndDocument), limit(5)), (articles) => {
 				if (articles.metadata.fromCache === false && articles.metadata.hasPendingWrites === false) {
-					console.log('page 2', articles);
+					console.log('filtered videos page 2', articles);
 					setFiltered2(formatArticle(articles));
 				} else {
-					console.log('page 2: cached page');
+					console.log('filtered videos page 2', 'cached page');
 				}
 			});
 		}, 2500);
