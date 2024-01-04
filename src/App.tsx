@@ -52,7 +52,7 @@ function App() {
 			setFiltered1(formatArticle(articles));
 		});
 
-		// Wait 2.5s for previous databases to resolve and cache
+		// Wait 2.5s for previous queries to resolve and cache
 		setTimeout(() => {
 			// Get page 2 of filtered articles
 			onSnapshot(query(collection(firestore, 'articles'), orderBy('createdAt', 'desc'), startAfter(page1EndDocument), limit(5)), (articles) => {
